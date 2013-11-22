@@ -1,0 +1,3 @@
+C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\TS_RA2_YR_Thumbnails_Extractor\bin\Debug\TS_RA2_YR_Thumbnails_Extractor.exe.config
+C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\bin\Debug\TS_RA2_YR_Thumbnails_Extractor.exe.config
+C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\TS_RA2_YR_Thumbnails_Extractor.exe.config
