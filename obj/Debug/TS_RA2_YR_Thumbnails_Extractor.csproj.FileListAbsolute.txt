@@ -1,3 +1,6 @@
-C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\TS_RA2_YR_Thumbnails_Extractor\bin\Debug\TS_RA2_YR_Thumbnails_Extractor.exe.config
-C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\bin\Debug\TS_RA2_YR_Thumbnails_Extractor.exe.config
 C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\TS_RA2_YR_Thumbnails_Extractor.exe.config
+C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\obj\Debug\TS_RA2_YR_Thumbnails_Extractor.csprojResolveAssemblyReference.cache
+C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\obj\Debug\TS_RA2_YR_Thumbnails_Extractor.exe
+C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\obj\Debug\TS_RA2_YR_Thumbnails_Extractor.pdb
+C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\TS_RA2_YR_Thumbnails_Extractor.exe
+C:\Users\maikel\Desktop\RA95 Patch\TS_RA2_YR_Thumbnails_Extractor\TS_RA2_YR_Thumbnails_Extractor.pdb
