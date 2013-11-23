@@ -111,10 +111,12 @@ namespace TS_RA2_YR_Thumbnails_Extractor
                     int WayDY = WayRX + WayRY - LocalSize.Width - 1;
 
 
+                    const int ManualAdjustX = 6; // Tested with scalefactor 1
+                    const int ManualAdjustY = -3; // Tested with scalefactor 1
 
                     Waypoints[WayPoint].WasFound = true;
-                    Waypoints[WayPoint].Y = WayDY / 2;
-                    Waypoints[WayPoint].X = WayDX;
+                    Waypoints[WayPoint].Y = (WayDY / 2) + ManualAdjustY;
+                    Waypoints[WayPoint].X = WayDX + ManualAdjustX;
 
                 }
 
