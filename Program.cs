@@ -18,17 +18,35 @@ namespace TS_RA2_YR_Thumbnails_Extractor
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-            var MapThumb = new MapThumbnailExtractor("test.map");
+            // DON'T FORGET TO CALL THIS FUNCTION
+            MapThumbnailExtractor.Load();
+
+            var MapThumb = new MapThumbnailExtractor("test.map", 1);
             MapThumb.Get_Bitmap().Save("test.png");
         }
     }
 
     class MapThumbnailExtractor
     {
+        WaypointStruct[] Waypoints = new WaypointStruct[8];
         IniFile MapINI;
         Bitmap Preview;
+        Rectangle LocalSize;
+        static Bitmap[] SpawnLocationBitmaps = new Bitmap[8];
 
-        public unsafe MapThumbnailExtractor(string FileName)
+        static public void Load()
+        {
+            SpawnLocationBitmaps[0] = TS_RA2_YR_Thumbnails_Extractor.Resource1._1;
+            SpawnLocationBitmaps[1] = TS_RA2_YR_Thumbnails_Extractor.Resource1._2;
+            SpawnLocationBitmaps[2] = TS_RA2_YR_Thumbnails_Extractor.Resource1._3;
+            SpawnLocationBitmaps[3] = TS_RA2_YR_Thumbnails_Extractor.Resource1._4;
+            SpawnLocationBitmaps[4] = TS_RA2_YR_Thumbnails_Extractor.Resource1._5;
+            SpawnLocationBitmaps[5] = TS_RA2_YR_Thumbnails_Extractor.Resource1._6;
+            SpawnLocationBitmaps[6] = TS_RA2_YR_Thumbnails_Extractor.Resource1._7;
+            SpawnLocationBitmaps[7] = TS_RA2_YR_Thumbnails_Extractor.Resource1._8;
+        }
+
+        public unsafe MapThumbnailExtractor(string FileName, int ScaleFactor)
         {
             MapINI = new IniFile(FileName);
 
@@ -37,6 +55,9 @@ namespace TS_RA2_YR_Thumbnails_Extractor
             Preview = new Bitmap(previewSize.Width, previewSize.Height, PixelFormat.Format24bppRgb);
 
             byte[] image = new byte[Preview.Width * Preview.Height * 3];
+
+            string[] LocalSizeString = MapINI.getStringValue("Map", "LocalSize", "").Split(',');
+            LocalSize = new Rectangle(int.Parse(LocalSizeString[0]), int.Parse(LocalSizeString[1]), int.Parse(LocalSizeString[2]), int.Parse(LocalSizeString[3]));
 
 
             var SectionKeyValues = MapINI.getSectionContent("PreviewPack");
@@ -69,14 +90,80 @@ namespace TS_RA2_YR_Thumbnails_Extractor
                     *p++ = b;
                 }
             }
+            // spawn locations
 
+            var WaypointsSectionKeyValues = MapINI.getSectionContent("Waypoints");
+
+            if (WaypointsSectionKeyValues != null)
+            {
+                foreach (KeyValuePair<string, string> entry in WaypointsSectionKeyValues)
+                {
+                    int WayPoint = int.Parse(entry.Key);
+
+                    if (WayPoint > 7) continue;
+
+                    int Pos = int.Parse(entry.Value);
+
+                    int WayRY = Pos / 1000;
+                    int WayRX = Pos - WayRY * 1000;
+
+                    int WayDX = WayRX - WayRY + LocalSize.Width - 1;
+                    int WayDY = WayRX + WayRY - LocalSize.Width - 1;
+
+
+
+                    Waypoints[WayPoint].WasFound = true;
+                    Waypoints[WayPoint].Y = WayDY / 2;
+                    Waypoints[WayPoint].X = WayDX;
+
+                }
+
+            }
             Preview.UnlockBits(bmd);
+
+            Graphics g_ = Graphics.FromImage(Preview);
+
+            Draw_Spawn_Locations(ref g_, ScaleFactor);
+            g_.Flush();
         }
 
         public Bitmap Get_Bitmap()
         {
             return Preview;
         }
+
+        void Draw_Spawn_Locations(ref Graphics g, int _ScaleFactor)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                Draw_Spawn_Location(ref g, i, _ScaleFactor);
+            }
+        }
+
+
+        void Draw_Spawn_Location(ref Graphics g, int SpawnNumber, int _ScaleFactor)
+        {
+            WaypointStruct Waypoint = Waypoints[SpawnNumber];
+            if (Waypoint.WasFound == false) return;
+            if (SpawnLocationBitmaps[SpawnNumber] == null) return;
+
+            // Console.WriteLine("draw spawn: X = {0}, Y = {1}", Waypoint.X, Waypoint.Y);
+
+            var Spawn = SpawnLocationBitmaps[SpawnNumber];
+            int SpawnX = Spawn.Height / (2 * _ScaleFactor);
+            int SpawnY = Spawn.Width / (2 * _ScaleFactor);
+            g.DrawImage(Spawn, (Waypoint.X - SpawnX)  * _ScaleFactor, (Waypoint.Y - SpawnY) * _ScaleFactor, Spawn.Width, Spawn.Height);
+
+            g.Flush();
+        }
+    }
+
+
+    struct WaypointStruct
+    {
+        public bool WasFound;
+        public int X;
+        public int Y;
     }
 
     public class Format5
