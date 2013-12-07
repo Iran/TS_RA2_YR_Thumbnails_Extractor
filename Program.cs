@@ -136,7 +136,7 @@ namespace TS_RA2_YR_Thumbnails_Extractor
 
         void Draw_Spawn_Locations(ref Graphics g, int _ScaleFactor)
         {
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 Draw_Spawn_Location(ref g, i, _ScaleFactor);
             }
